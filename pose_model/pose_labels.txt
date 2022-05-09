@@ -1,0 +1,5 @@
+lie
+lie_faceDown
+lie_side
+sit_cross_legged
+sit_on_chair

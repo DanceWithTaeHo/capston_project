@@ -20,7 +20,7 @@
 
 
 
-## 1. 프로젝트 정의
+## 1. 프로젝트 개요
 
  본 프로젝트는 딥러닝 모델을 통해 환자의 감정과 자세를 분석하여 관련 보호자에게 알림이나 피드백을 주는 앱을 만드는 것이 목표입니다.
 
@@ -102,4 +102,26 @@
 - 백엔드는 파이어베이스로 제작하였습니다.
 
 
+
+## 2. 어플리케이션 실행
+
+**포즈 모델 데모**
+
+```shell
+cd pose_model
+python camera_memo.py --classifier pose_classifier --label_file pose_labels
+```
+
+![7](./assets\7.gif)
+
+
+
+**표정 모델 데모**
+
+``` shell
+cd face_model
+python camera.py
+```
+
+![8](./assets/8.gif)
 
