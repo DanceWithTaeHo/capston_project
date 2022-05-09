@@ -112,7 +112,7 @@ cd pose_model
 python camera_memo.py --classifier pose_classifier --label_file pose_labels
 ```
 
-![7](./assets\7.gif)
+![7](./assets/7.gif)
 
 
 
