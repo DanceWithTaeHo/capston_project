@@ -1,11 +1,14 @@
+import 'package:capston_app/src/controller/chart_controller.dart';
+import 'package:capston_app/src/repository/firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ChartComponent extends StatelessWidget {
   late double verticalSize;
   late double horizonSize;
   late Color color;
   late String text;
-
+  final ChartController controller = Get.put(ChartController());
   ChartComponent({Color color = Colors.amber, String text = "긍정감", Key? key})
       : super(key: key) {
     this.color = color;
@@ -63,8 +66,8 @@ class ChartComponent extends StatelessWidget {
             color: Colors.grey.withOpacity(0.1),
           ),
         ),
-        Container(
-          width: horizonSize * 0.5,
+        AnimatedContainer(
+          width: (horizonSize * 0.75) * controller.ratio,
           height: 15.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(7.5),
@@ -74,6 +77,7 @@ class ChartComponent extends StatelessWidget {
               end: Alignment.centerRight,
             ),
           ),
+          duration: const Duration(milliseconds: 500),
         ),
       ]),
     );
@@ -83,6 +87,7 @@ class ChartComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     verticalSize = MediaQuery.of(context).size.height; // 수직길이
     horizonSize = MediaQuery.of(context).size.width; // 수평길이
+    controller.setRatio(0.5);
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Container(

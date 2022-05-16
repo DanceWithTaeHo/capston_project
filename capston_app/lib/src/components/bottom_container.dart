@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 class BottomContainer extends StatelessWidget {
   final TopContainerController controller = Get.put(TopContainerController());
-  final _toDay = DateTime.now();
+  final _today = DateTime.now();
   final DateFormat formatter = DateFormat('yyyy.MM.dd');
   late double verticalSize;
   late double horizonSize;
@@ -14,7 +14,7 @@ class BottomContainer extends StatelessWidget {
   BottomContainer({Key? key}) : super(key: key);
 
   Widget _titleWidget() {
-    var today = formatter.format(_toDay);
+    var today = formatter.format(_today);
     return Padding(
       padding: const EdgeInsets.all(30.0),
       child: Row(
