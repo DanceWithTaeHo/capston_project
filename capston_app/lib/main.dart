@@ -1,4 +1,6 @@
 import 'package:capston_app/src/controller/firebase_controller.dart';
+import 'package:capston_app/src/repository/fireabase.dart';
+import 'package:capston_app/src/utils/date_formatter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +8,11 @@ import 'package:get/get.dart';
 import 'src/app.dart';
 import 'src/binding/init_binding.dart';
 import 'firebase_options.dart';
-import 'src/repository/firestore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseRepository.getLog('emotion');
+  await FirebaseRepository.init();
 
   runApp(const MyApp());
 }
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'CapstonDesign Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

@@ -1,6 +1,6 @@
 class EmotionLog {
   String? emotion;
-  DateTime? time;
+  int? time;
 
   EmotionLog({
     this.emotion,

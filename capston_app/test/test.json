@@ -1,0 +1,31 @@
+{
+  "name": "김부기",
+  "emotion_logs": [
+    {
+      "emotion": "happy",
+      "time": 1652981277473496
+    },
+    {
+      "emotion": "sad",
+      "time": 1652984877473496
+    },
+    {
+      "emotion": "happy",
+      "time": 1652988477473496
+    }
+  ],
+  "pose_logs": [
+    {
+      "pose": "sit",
+      "time": 1652981277473496
+    },
+    {
+      "pose": "lie",
+      "time": 1652984877473496
+    },
+    {
+      "pose": "sit",
+      "time": 1652988477473496
+    }
+  ]
+}

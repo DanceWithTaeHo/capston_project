@@ -1,6 +1,6 @@
 class PoseLog {
   String? pose;
-  DateTime? time;
+  int? time;
 
   PoseLog({
     this.pose,

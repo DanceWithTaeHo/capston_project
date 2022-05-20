@@ -1,20 +1,23 @@
 import 'package:capston_app/src/components/chart_component.dart';
+import 'package:capston_app/src/controller/chart_controller.dart';
 import 'package:capston_app/src/controller/top_container_controller.dart';
+import 'package:capston_app/src/repository/fireabase.dart';
+import 'package:capston_app/src/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class BottomContainer extends StatelessWidget {
   final TopContainerController controller = Get.put(TopContainerController());
-  final _today = DateTime.now();
-  final DateFormat formatter = DateFormat('yyyy.MM.dd');
+  final ChartController chartcontroller = Get.put(ChartController());
+
   late double verticalSize;
   late double horizonSize;
 
   BottomContainer({Key? key}) : super(key: key);
 
   Widget _titleWidget() {
-    var today = formatter.format(_today);
+    var today = DateFormatter.today;
     return Padding(
       padding: const EdgeInsets.all(30.0),
       child: Row(
@@ -47,14 +50,20 @@ class BottomContainer extends StatelessWidget {
         _titleWidget(),
         Column(
           children: [
-            ChartComponent(
-              color: Colors.amber,
-              text: "긍정감",
-            ),
-            ChartComponent(
-              color: Colors.blue,
-              text: "우울감",
-            ),
+            GetBuilder<ChartController>(builder: (_) {
+              return ChartComponent(
+                color: Colors.amber,
+                text: "긍정감",
+                ratio: chartcontroller.happyRatio,
+              );
+            }),
+            GetBuilder<ChartController>(builder: (_) {
+              return ChartComponent(
+                color: Colors.blue,
+                text: "우울감",
+                ratio: chartcontroller.sadRatio,
+              );
+            }),
           ],
         ),
       ],

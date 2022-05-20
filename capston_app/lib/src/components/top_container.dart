@@ -1,13 +1,9 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'dart:math';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:capston_app/src/controller/chart_controller.dart';
 import 'package:capston_app/src/controller/top_container_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
 
 class TopContainer extends StatefulWidget {
@@ -133,11 +129,14 @@ class _TopWidgetState extends State<TopContainer> {
         innerColor: Colors.black,
         colorBuilder: (i) => Colors.amber,
         onChanged: (i) => setState(() {
-          if (i == 1) {
-            num = 70;
+          if (i == 0) {
+            Get.find<ChartController>().setEmotionRatio('today');
+          } else if (i == 1) {
+            Get.find<ChartController>().setEmotionRatio('week');
+          } else if (i == 2) {
+            Get.find<ChartController>().setEmotionRatio('month');
           }
           value = i;
-          controller.setScore(num);
         }),
       ),
     );
@@ -169,6 +168,7 @@ class _TopWidgetState extends State<TopContainer> {
     return data;
   }
 
+/*
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       color: Color(0xff68737d),
@@ -282,7 +282,7 @@ class _TopWidgetState extends State<TopContainer> {
       ],
     );
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     verticalSize = MediaQuery.of(context).size.height; // 수직길이
