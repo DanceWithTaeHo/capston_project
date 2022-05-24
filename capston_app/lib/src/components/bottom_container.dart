@@ -48,23 +48,59 @@ class BottomContainer extends StatelessWidget {
       // 가로 축 정렬
       children: [
         _titleWidget(),
-        Column(
-          children: [
-            GetBuilder<ChartController>(builder: (_) {
-              return ChartComponent(
-                color: Colors.amber,
-                text: "긍정감",
-                ratio: chartcontroller.happyRatio,
-              );
-            }),
-            GetBuilder<ChartController>(builder: (_) {
-              return ChartComponent(
-                color: Colors.blue,
-                text: "우울감",
-                ratio: chartcontroller.sadRatio,
-              );
-            }),
-          ],
+        Expanded(
+          child: ListView(
+            children: [
+              GetBuilder<ChartController>(builder: (_) {
+                return ChartComponent(
+                    color: Colors.amber,
+                    text: "긍정감",
+                    ratio: chartcontroller.positiveRatio);
+              }),
+              GetBuilder<ChartController>(builder: (_) {
+                return ChartComponent(
+                  color: Colors.purple.shade300,
+                  text: "부정감",
+                  ratio: chartcontroller.negativeRatio,
+                );
+              }),
+              GetBuilder<ChartController>(builder: (_) {
+                return ChartComponent(
+                  color: Colors.greenAccent,
+                  text: "무표정",
+                  ratio: chartcontroller.neutralRatio,
+                );
+              }),
+              GetBuilder<ChartController>(builder: (_) {
+                return ChartComponent(
+                  color: Colors.red.shade400,
+                  text: "행복감",
+                  ratio: chartcontroller.happyRatio,
+                );
+              }),
+              GetBuilder<ChartController>(builder: (_) {
+                return ChartComponent(
+                  color: Colors.blue,
+                  text: "우울감",
+                  ratio: chartcontroller.sadRatio,
+                );
+              }),
+              GetBuilder<ChartController>(builder: (_) {
+                return ChartComponent(
+                  color: Colors.yellow.shade400,
+                  text: "놀람",
+                  ratio: chartcontroller.surpriseRatio,
+                );
+              }),
+              GetBuilder<ChartController>(builder: (_) {
+                return ChartComponent(
+                  color: Colors.deepOrangeAccent,
+                  text: "두려움",
+                  ratio: chartcontroller.fearRatio,
+                );
+              }),
+            ],
+          ),
         ),
       ],
     );

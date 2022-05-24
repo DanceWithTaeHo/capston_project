@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:capston_app/src/controller/chart_controller.dart';
 import 'package:capston_app/src/controller/top_container_controller.dart';
+import 'package:capston_app/src/repository/fireabase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -23,14 +24,12 @@ class _TopWidgetState extends State<TopContainer> {
   static const List<int> _isSelected = [TODAY, WEEK, MONTH];
 
   static const colorizeColors = [
-    Colors.purple,
     Colors.blue,
-    Colors.yellow,
     Colors.red,
   ];
 
   static const colorizeTextStyle = TextStyle(
-    fontSize: 50.0,
+    fontSize: 40.0,
     fontFamily: 'Horizon',
   );
 
@@ -52,7 +51,7 @@ class _TopWidgetState extends State<TopContainer> {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: Text(
-        "대체로 긍정",
+        FirebaseRepository.todayEmotionText,
         style: TextStyle(
             fontSize: 25,
             color: Colors.black.withOpacity(0.8),
@@ -87,18 +86,17 @@ class _TopWidgetState extends State<TopContainer> {
         repeatForever: true,
         animatedTexts: [
           ColorizeAnimatedText(
-            // "controller.score.value.toString()",
-            "100",
+            FirebaseRepository.todayEmotionScore,
             textStyle: colorizeTextStyle,
             colors: colorizeColors,
           ),
           ColorizeAnimatedText(
-            '80',
+            FirebaseRepository.weekEmotionScore,
             textStyle: colorizeTextStyle,
             colors: colorizeColors,
           ),
           ColorizeAnimatedText(
-            '70',
+            FirebaseRepository.monthEmotionScore,
             textStyle: colorizeTextStyle,
             colors: colorizeColors,
           ),

@@ -1,5 +1,6 @@
 import 'package:capston_app/src/components/bottom_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'components/top_container.dart';
@@ -10,6 +11,7 @@ class App extends GetView<AppController> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
