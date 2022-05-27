@@ -1,5 +1,6 @@
 import 'package:capston_app/src/models/emotion_log.dart';
 import 'package:capston_app/src/models/pose_log.dart';
+import 'package:capston_app/src/models/sickroom_log.dart';
 import 'package:capston_app/src/utils/date_formatter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -27,15 +28,24 @@ class FirebaseRepository {
   static List<PoseLog> todayPoseLogs = [];
   static List<PoseLog> weekPoseLogs = [];
   static List<PoseLog> monthPoseLogs = [];
+  static List<SickroomLog> todaySickroomLogs = [];
 
   static String todayEmotionText = "";
-  static String todayEmotionScore = "";
-  static String weekEmotionScore = "";
-  static String monthEmotionScore = "";
+
+  static int todayEmotionScore = 0;
+  static int weekEmotionScore = 0;
+  static int monthEmotionScore = 0;
+
+  static String nowPose = "";
+  static int nowPoseSecond = 0;
+
+  static double nowTemperature = 0.0;
+  static double nowHumidity = 0.0;
 
   static Future<void> init() async {
     await _readData('emotion');
     await _readData('pose');
+    await _readData('sickroom');
     setEmotionRatio('today');
     setEmotionRatio('week');
     setEmotionRatio('month');
@@ -45,38 +55,25 @@ class FirebaseRepository {
     setEmotionScore('today');
     setEmotionScore('week');
     setEmotionScore('month');
+    print(todaySickroomLogs.length);
+    print(todaySickroomLogs.last);
   }
 
   static void setEmotionScore(String kind) {
     double positiveRatio = 0.0;
     double negativeRatio = 0.0;
     if (kind == 'today') {
-      if (todayEmotionRatio['positive'] == 0) {
-        todayEmotionText = "분석 데이터가 모잘라요!";
-      } else {
-        positiveRatio = todayEmotionRatio['positive']!;
-        negativeRatio = todayEmotionRatio['negative']!;
-        todayEmotionScore = "금일 점수 ${positiveRatio.round()}";
-      }
-      if (positiveRatio >= 80 &&
-          FirebaseRepository.todayEmotionRatio['neutral']! >= 80) {
-        todayEmotionText = "대체로 좋아요";
-      } else if (positiveRatio >= 80 &&
-          FirebaseRepository.todayEmotionRatio['neutral']! <= 80) {
-        todayEmotionText = "항상 웃고 있어요!";
-      } else if (negativeRatio > 20) {
-        todayEmotionText = "주의 깊게 봐야해요";
-      } else if (negativeRatio > positiveRatio) {
-        todayEmotionText = "정밀 감정이 필요해요";
-      }
+      positiveRatio = todayEmotionRatio['positive']!;
+      negativeRatio = todayEmotionRatio['negative']!;
+      todayEmotionScore = positiveRatio.round();
     } else if (kind == 'week') {
       positiveRatio = weekEmotionRatio['positive']!;
       negativeRatio = weekEmotionRatio['negative']!;
-      weekEmotionScore = "주간 점수 ${positiveRatio.round()}";
+      weekEmotionScore = positiveRatio.round();
     } else if (kind == 'month') {
       negativeRatio = FirebaseRepository.monthEmotionRatio['negative']!;
       positiveRatio = FirebaseRepository.monthEmotionRatio['positive']!;
-      monthEmotionScore = "월간 점수 ${positiveRatio.round()}";
+      monthEmotionScore = positiveRatio.round();
     }
   }
 
@@ -168,6 +165,8 @@ class FirebaseRepository {
         // 가장 최근의 로그일 때만
         ratio = double.parse(
             (((duration.inSeconds) / second) * 100).toStringAsFixed(2));
+        nowPose = poseLog.pose!;
+        nowPoseSecond = duration.inSeconds;
       } else {
         // 나머지 로그들은 이전 로그의 비중을 뺀다.
 
@@ -338,10 +337,20 @@ class FirebaseRepository {
 
     // 문서의 길이만큼 돌면서 작업 수행
     for (int i = 0; i < result.children.length; i++) {
+      String state = "";
+      double temperature = 0.0;
+      double humidity = 0.0;
       var timestamp = result.children.elementAt((i)).child('time').value
           as int; // 로그의 타임 스템프
-      var state = result.children.elementAt(i).child('${kind}').value
-          as String; // 로그의 타임 스템프
+      if (kind == "sickroom") {
+        temperature =
+            (result.children.elementAt(i).child('temperature').value as int)
+                .toDouble();
+        humidity = (result.children.elementAt(i).child('humidity').value as int)
+            .toDouble();
+      } else
+        state = result.children.elementAt(i).child('${kind}').value
+            as String; // 로그의
       if (timestamp < DateFormatter.ago1MonthTimestamp) {
         continue;
       }
@@ -365,6 +374,14 @@ class FirebaseRepository {
         }
         if (timestamp >= DateFormatter.ago1MonthTimestamp) {
           monthPoseLogs.add(PoseLog(pose: state, time: timestamp));
+        }
+      } else if (kind == 'sickroom') {
+        if (timestamp >= DateFormatter.ago24HourTimestamp) {
+          todaySickroomLogs.add(SickroomLog(
+              temperature: temperature, humidity: humidity, time: timestamp));
+
+          nowTemperature = temperature;
+          nowHumidity = humidity;
         }
       }
     }

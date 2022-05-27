@@ -1,3 +1,4 @@
+import 'package:capston_app/src/pages/emotion_page.dart';
 import 'package:capston_app/src/repository/fireabase.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,6 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       getPages: [
         GetPage(name: "/", page: () => App()),
-        // GetPage(name: "/detail/:videoId", page: () => YoutubeDetail()),
       ],
     );
   }

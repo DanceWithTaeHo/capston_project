@@ -1,10 +1,31 @@
+import 'package:capston_app/src/controller/emotion_controller.dart';
+import 'package:capston_app/src/repository/fireabase.dart';
 import 'package:get/get.dart';
 
 class TopContainerController extends GetxController {
-  RxString score = "".obs;
+  RxString emotionIconURL = "assets/icons/smile.svg".obs;
+  int todayEmotionScore = FirebaseRepository.todayEmotionScore;
+  int weekEmotionScore = FirebaseRepository.weekEmotionScore;
+  int monthEmotionScore = FirebaseRepository.monthEmotionScore;
+  int togleButtonValue = 0;
 
-  void setScore(int i) {
-    var text = i.toString() + "입니다.";
-    score = text.obs;
+  void setEmotionIcon(String kind) {
+    if (kind == 'today') {
+      emotionIconURL = "assets/icons/smile.svg".obs;
+    } else if (kind == 'week') {
+    } else if (kind == 'month') {}
+    update();
+  }
+
+  void setToggleButton(int i) {
+    if (i == 0) {
+      Get.find<EmotionController>().setEmotionRatio('today');
+    } else if (i == 1) {
+      Get.find<EmotionController>().setEmotionRatio('week');
+    } else if (i == 2) {
+      Get.find<EmotionController>().setEmotionRatio('month');
+    }
+    togleButtonValue = i;
+    update();
   }
 }

@@ -23,7 +23,7 @@ class Pose:
         return "pose:{0},time:{1}".format(self.pose, self.time)
     def __repr__(self):
         return "pose:{0},time:{1}".format(self.pose, self.time)
-
+'''
 emotion_logs = []
 pose_logs = []
 data = OrderedDict()
@@ -47,9 +47,8 @@ for i in range(29, -1, -1):
 
 with open('words.json', 'w', encoding='utf-8') as make_file:
     json.dump(data, make_file, ensure_ascii=False, indent="\t",  default=lambda x: x.__dict__)
+'''
 
-
-"""
 #Firebase database 인증 및 앱 초기화
 cred = credentials.Certificate("capston-design-6d365-firebase-adminsdk-kkcq8-92db807e88.json")
 firebase_admin.initialize_app(cred,{
@@ -65,18 +64,14 @@ x = datetime.timestamp(today + timedelta(hours=4))
 # dt = datetime.fromtimestamp(todayTimestamp) #현재 타임스템프를 date로
 # print(dt.strftime('%Y%m%d %H:%M:%S')) # 포멧화
 
-
-
 data = {
-    "emotion": "sad",
-    "time": 1652980716
+    "emotion": "neutral",
+    "time": 1653536550315259
 }
-print(round(datetime.timestamp(today + timedelta(hours=-2)) * 1000000))
-print(round(datetime.timestamp(today + timedelta(hours=-1)) * 1000000))
-print(todayTimestamp)
+# print(round(datetime.timestamp(today + timedelta(hours=-2)) * 1000000))
+# print(round(datetime.timestamp(today + timedelta(hours=-1)) * 1000000))
+# print(todayTimestamp)
 
-# ref = db.reference('emotion_logs')
-# ref.push(data)
+ref = db.reference('emotion_logs')
+ref.push(data)
 # x = ref.get()
-
-"""
