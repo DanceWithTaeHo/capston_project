@@ -111,19 +111,19 @@ class FirebaseRepository {
 
     if (kind == 'today') {
       todayPoseRatio['lie'] = lieRatio;
-      todayPoseRatio['lieFace'] = lieFaceDownRatio;
+      todayPoseRatio['lieFaceDown'] = lieFaceDownRatio;
       todayPoseRatio['lieSide'] = lieSideRatio;
       todayPoseRatio['sitCrossLegged'] = sitCrossLeggedRatio;
       todayPoseRatio['sitOnChair'] = sitOnChairRatio;
     } else if (kind == 'week') {
       weekPoseRatio['lie'] = lieRatio;
-      weekPoseRatio['lieFace'] = lieFaceDownRatio;
+      weekPoseRatio['lieFaceDown'] = lieFaceDownRatio;
       weekPoseRatio['lieSide'] = lieSideRatio;
       weekPoseRatio['sitCrossLegged'] = sitCrossLeggedRatio;
       weekPoseRatio['sitOnChair'] = sitOnChairRatio;
     } else if (kind == 'month') {
       monthPoseRatio['lie'] = lieRatio;
-      monthPoseRatio['lieFace'] = lieFaceDownRatio;
+      monthPoseRatio['lieFaceDown'] = lieFaceDownRatio;
       monthPoseRatio['lieSide'] = lieSideRatio;
       monthPoseRatio['sitCrossLegged'] = sitCrossLeggedRatio;
       monthPoseRatio['sitOnChair'] = sitOnChairRatio;
@@ -385,15 +385,9 @@ class FirebaseRepository {
         }
       }
     }
-    /*
-    if (todayEmotionLogs.length == 0) {
-      todayEmotionLogs
-          .add(EmotionLog(emotion: 'empty', time: DateFormatter.nowTimestamp));
+
+    if (todaySickroomLogs.length == 0) {
+      todaySickroomLogs.add(SickroomLog());
     }
-    if (todayPoseLogs.length == 0) {
-      todayPoseLogs
-          .add(PoseLog(pose: 'empty', time: DateFormatter.nowTimestamp));
-    }
-    */
   }
 }

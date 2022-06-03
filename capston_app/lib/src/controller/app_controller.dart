@@ -1,11 +1,16 @@
+import 'package:capston_app/src/controller/top_container_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
-enum PageType { Emotion, Pose }
 
 class AppController extends GetxService {
   static AppController get to => Get.find();
   PageController pageController = PageController(initialPage: 0);
+
+  AppController() {
+    pageController.addListener(() {
+      Get.find<TopContainerController>().togleButtonValue = 0;
+    });
+  }
 
   List pageList = [
     "emotion",
@@ -28,4 +33,6 @@ class AppController extends GetxService {
     pageController.nextPage(
         duration: Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
   }
+
+  void showPopup() {}
 }

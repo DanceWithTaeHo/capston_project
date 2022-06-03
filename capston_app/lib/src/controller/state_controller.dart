@@ -14,8 +14,11 @@ class StateController extends GetxController {
   String nowPose = FirebaseRepository.nowPose;
   int nowPoseSecond = FirebaseRepository.nowPoseSecond;
 
+  String topPoseTitle = "";
+
   List<Widget> stateIconListView = [];
   List<Widget> feedbackListView = [];
+  List<Widget> dialogListView = [];
 
   StateController() {
     setIssue();
@@ -43,6 +46,7 @@ class StateController extends GetxController {
           .add(IssueIconWidget(text: "온 도", iconName: "temperature.svg"));
       feedbackListView.add(
           FeedbackWidget(text: "실내 온도 20도 미만", iconName: "temperature.svg"));
+      topPoseTitle = "온도 관리의 유의하세요";
     }
   }
 }

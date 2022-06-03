@@ -1,4 +1,5 @@
 import 'package:capston_app/src/controller/emotion_controller.dart';
+import 'package:capston_app/src/controller/pose_controller.dart';
 import 'package:capston_app/src/repository/fireabase.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +18,31 @@ class TopContainerController extends GetxController {
     update();
   }
 
-  void setToggleButton(int i) {
+  void setEmotionToggleButton(int i) {
+    if (i == 0) {
+      Get.find<EmotionController>().setEmotionRatio('today');
+    } else if (i == 1) {
+      Get.find<EmotionController>().setEmotionRatio('week');
+    } else if (i == 2) {
+      Get.find<EmotionController>().setEmotionRatio('month');
+    }
+    togleButtonValue = i;
+    update();
+  }
+
+  void setPoseToggleButton(int i) {
+    if (i == 0) {
+      Get.find<PoseController>().setPoseRatio('today');
+    } else if (i == 1) {
+      Get.find<PoseController>().setPoseRatio('week');
+    } else if (i == 2) {
+      Get.find<PoseController>().setPoseRatio('month');
+    }
+    togleButtonValue = i;
+    update();
+  }
+
+  void setSickroomToggleButton(int i) {
     if (i == 0) {
       Get.find<EmotionController>().setEmotionRatio('today');
     } else if (i == 1) {

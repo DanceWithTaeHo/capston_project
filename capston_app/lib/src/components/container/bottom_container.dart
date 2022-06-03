@@ -1,6 +1,6 @@
 import 'package:capston_app/src/components/widget/chart_widget.dart';
 import 'package:capston_app/src/controller/emotion_controller.dart';
-import 'package:capston_app/src/controller/state_controller.dart';
+import 'package:capston_app/src/controller/pose_controller.dart';
 import 'package:capston_app/src/repository/fireabase.dart';
 import 'package:capston_app/src/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
@@ -8,16 +8,23 @@ import 'package:get/get.dart';
 
 class BottomContainer extends StatelessWidget {
   final EmotionController emotionController = Get.put(EmotionController());
+  final PoseController poseController = Get.put(PoseController());
   Widget listView = ListView();
+  GetxController controller = Get.find<PoseController>();
 
   late double verticalSize;
   late double horizonSize;
-  bool _isEmotion = true;
+  late Widget bottomTitle;
 
   BottomContainer({Key? key}) : super(key: key);
   BottomContainer.emotion({Key? key}) : super(key: key) {
+    bottomTitle = GetBuilder<EmotionController>(builder: (_) {
+      return Text(
+        Get.find<EmotionController>().bottomTitle,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+      );
+    });
     listView = GetBuilder<EmotionController>(builder: (_) {
-      _isEmotion = true;
       return ListView(
         children: [
           ChartWidget(
@@ -58,9 +65,52 @@ class BottomContainer extends StatelessWidget {
       );
     });
   }
+  BottomContainer.pose({Key? key}) : super(key: key) {
+    bottomTitle = GetBuilder<PoseController>(builder: (_) {
+      return Text(
+        Get.find<PoseController>().bottomTitle,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+      );
+    });
+    listView = GetBuilder<PoseController>(builder: (_) {
+      return ListView(
+        children: [
+          ChartWidget(
+              color: Colors.green,
+              text: "누운 자세",
+              ratio: poseController.lieRatio),
+          ChartWidget(
+            color: Colors.lightBlue,
+            text: "엎드린 자세",
+            ratio: poseController.lieFaceDownRatio,
+          ),
+          ChartWidget(
+            color: Colors.red.shade300,
+            text: "옆으로 누운 자세",
+            ratio: poseController.lieSideRatio,
+          ),
+          ChartWidget(
+            color: Colors.yellow.shade300,
+            text: "양반다리",
+            ratio: poseController.sitCrossLeggedRatio,
+          ),
+          ChartWidget(
+            color: Colors.amber,
+            text: "걸터앉은 자세",
+            ratio: poseController.sitOnChairRatio,
+          )
+        ],
+      );
+    });
+  }
   BottomContainer.sickroom({Key? key}) : super(key: key) {
+    bottomTitle = GetBuilder<PoseController>(builder: (_) {
+      return Text(
+        "현재상황",
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+      );
+    });
     listView = GetBuilder<EmotionController>(builder: (_) {
-      _isEmotion = true;
       return ListView(
         children: [
           ChartWidget(
@@ -78,25 +128,22 @@ class BottomContainer extends StatelessWidget {
   }
   BottomContainer.stateInfo({Key? key, required this.listView})
       : super(key: key) {
-    _isEmotion = false;
+    bottomTitle = GetBuilder<PoseController>(builder: (_) {
+      return Text(
+        "현재상황",
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+      );
+    });
   }
 
   Widget _titleWidget() {
     var today = DateFormatter.today;
-    bool isEmotion = _isEmotion;
     return Padding(
       padding: const EdgeInsets.all(30.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          GetBuilder<EmotionController>(
-            builder: (_) {
-              return Text(
-                isEmotion ? emotionController.bottomTitle : "현재 상황",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-              );
-            },
-          ),
+          bottomTitle,
           Text(
             today,
             style: TextStyle(
@@ -114,8 +161,6 @@ class BottomContainer extends StatelessWidget {
     verticalSize = MediaQuery.of(context).size.height; // 수직길이
     horizonSize = MediaQuery.of(context).size.width; // 수평길이
     return Column(
-      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      // 가로 축 정렬
       children: [
         _titleWidget(),
         Expanded(

@@ -1,9 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:capston_app/src/controller/app_controller.dart';
-import 'package:capston_app/src/controller/emotion_controller.dart';
 import 'package:capston_app/src/repository/fireabase.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class EmotionScoreWidget extends StatelessWidget {

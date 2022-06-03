@@ -84,20 +84,22 @@ class ChartWidget extends StatelessWidget {
     horizonSize = MediaQuery.of(context).size.width; // 수평길이
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
-      child: Container(
-        width: horizonSize,
-        height: 70.0,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: Colors.white,
-        ),
-        child: Row(
-          children: [
-            _circleWidget(),
-            Column(
-              children: [_textWidget(), _grapeWidget()],
-            )
-          ],
+      child: Card(
+        child: Container(
+          width: horizonSize,
+          height: 70.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            color: Colors.white,
+          ),
+          child: Row(
+            children: [
+              _circleWidget(),
+              Column(
+                children: [_textWidget(), _grapeWidget()],
+              )
+            ],
+          ),
         ),
       ),
     );

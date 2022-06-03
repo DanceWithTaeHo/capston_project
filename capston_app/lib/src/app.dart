@@ -1,4 +1,5 @@
 import 'package:capston_app/src/pages/emotion_page.dart';
+import 'package:capston_app/src/pages/poes_page.dart';
 import 'package:capston_app/src/pages/sickroom_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,7 @@ class App extends GetView<AppController> {
   @override
   Widget build(BuildContext context) {
     return PageView(
-      children: [EmotionPage(), SickRoomPage(), StateInfoPage()],
+      children: [EmotionPage(), PosePage(), SickRoomPage(), StateInfoPage()],
       controller: controller.pageController,
     );
   }

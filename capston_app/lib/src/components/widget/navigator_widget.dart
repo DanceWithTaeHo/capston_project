@@ -1,5 +1,7 @@
+import 'package:capston_app/src/components/widget/state_dialog.dart';
 import 'package:capston_app/src/controller/app_controller.dart';
 import 'package:capston_app/src/controller/emotion_controller.dart';
+import 'package:capston_app/src/controller/pose_controller.dart';
 import 'package:capston_app/src/controller/state_controller.dart';
 import 'package:capston_app/src/controller/top_container_controller.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +24,22 @@ class NavigatorWidget extends GetView<AppController> {
 
   NavigatorWidget.emotion() {
     centerWidget = GetBuilder<EmotionController>(
+      builder: (_) => GestureDetector(
+        child: SizedBox(
+          child: SvgPicture.asset(
+            Get.find<EmotionController>().emotionIconURL,
+          ),
+          height: isOver() ? verticalSize * 0.15 : 100,
+        ),
+        onTap: () => Get.dialog(StateDialog()),
+      ),
+    );
+  }
+  NavigatorWidget.pose() {
+    centerWidget = GetBuilder<EmotionController>(
       builder: (_) => SizedBox(
         child: SvgPicture.asset(
-          Get.find<EmotionController>().emotionIconURL,
+          Get.find<PoseController>().poseIconURL,
         ),
         height: isOver() ? verticalSize * 0.15 : 100,
       ),

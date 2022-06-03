@@ -35,6 +35,27 @@ class TopContainer extends StatelessWidget {
       toggleButtonWidget
     ];
   }
+  TopContainer.pose(
+      {Key? key,
+      required this.color,
+      required this.textWidget,
+      required this.navigatorWidget,
+      required this.feedbackTextWidget,
+      required this.toggleButtonWidget})
+      : super(key: key) {
+    components = [
+      Container(
+        child: Column(
+          children: [
+            textWidget,
+            navigatorWidget,
+          ],
+        ),
+      ),
+      feedbackTextWidget,
+      toggleButtonWidget
+    ];
+  }
 
   TopContainer.sickroom(
       {Key? key,
