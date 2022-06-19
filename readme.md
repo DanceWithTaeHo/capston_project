@@ -104,13 +104,15 @@
 
 
 ## 2. 어플리케이션 실행
+**플러터 어플리케이션**
+플러터 개발도구를 설치해야 실행이 가능합니다.
+https://flutter-ko.dev/
+
+플러터 설치하였다면
+./capston_app에 모든 소스파일이 있습니다.
 
 **포즈 모델 데모**
 
-```shell
-cd pose_model
-python camera_memo.py --classifier pose_classifier --label_file pose_labels
-```
 
 ![7](./assets/7.gif)
 
@@ -118,10 +120,6 @@ python camera_memo.py --classifier pose_classifier --label_file pose_labels
 
 **표정 모델 데모**
 
-``` shell
-cd face_model
-python camera.py
-```
 
 ![8](./assets/8.gif)
 
